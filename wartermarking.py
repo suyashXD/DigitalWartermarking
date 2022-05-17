@@ -47,7 +47,11 @@ print("beta" + str(beta))
 
 watermark = cv2.imread(args["watermark"], cv2.IMREAD_UNCHANGED)
 
+#wH = Watermark's height
+#wW = Watermark's width
+
 (wH, wW) = watermark.shape[:2]
+
 
 # split the watermark into its respective Blue, Green, Red, and
 
@@ -72,6 +76,57 @@ if args["correct"] > 0:
     watermark = cv2.merge([B, G, R, A])
 
 # loop over the input images
+def transpose(self, matrix):
+
+        Mat = matrix
+
+        Final = []
+
+        for i in range(len(Mat[0])):
+
+                Final.insert(i,[ Mat[j][i] for j in range(len(Mat))])
+
+        return Final
+
+def matrixReshape(self, mat, r: int, c: int):
+
+        rm, cm = len(mat), len(mat[0])
+
+        if rm*cm != r*c: return mat
+
+        li=[]
+
+        ans=[[-1001 for i in range(c)] for j in range(r)]
+
+        for i in range(rm):
+
+            for j in range(cm):
+
+                li.append(mat[i][j])
+
+        for i in range(r):
+
+            for j in range(c):
+
+                ans[i][j]=li.pop(0)
+
+        return ans
+def matrixReshape(self, mat, r: int, c: int):
+
+        rm, cm = len(mat), len(mat[0])
+
+        if rm*cm != r*c: return mat
+
+        li=[]
+
+        ans=[[-1001 for i in range(c)] for j in range(r)]
+
+        for i in range(rm * cm):
+
+            ans[i//c][i%c] = mat[i//cm][i%cm]
+            
+        return ans
+
 
 for imagePath in paths.list_images(args["input"]):
 
